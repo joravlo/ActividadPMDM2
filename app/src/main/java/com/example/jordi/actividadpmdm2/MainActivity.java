@@ -30,6 +30,27 @@ public class MainActivity extends AppCompatActivity {
         radioFemella = (RadioButton) findViewById(R.id.rdFemella);
         radioMascle = (RadioButton) findViewById(R.id.rbMascle);
 
+        if (savedInstanceState != null) {
+            String message = savedInstanceState.getString("MENSAJE");
+            boolean enviar = savedInstanceState.getBoolean("ENVIAR");
+            boolean nom = savedInstanceState.getBoolean("NOM");
+            boolean radiogroup = savedInstanceState.getBoolean("RADIOGROUP");
+            boolean mascle = savedInstanceState.getBoolean("MASCLE");
+            boolean femella = savedInstanceState.getBoolean("FEMELLA");
+            if (enviar == false)
+                btEnviar.setEnabled(false);
+            if (nom == false)
+                etNom.setEnabled(false);
+            if (radiogroup == false)
+                radioGroup.setEnabled(false);
+            if (mascle == false)
+                radioFemella.setEnabled(false);
+            if (femella == false)
+                radioMascle.setEnabled(false);
+
+            tvText.setText(message);
+        }
+
         btEnviar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -56,6 +77,17 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         }
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        outState.putString("MENSAJE",tvText.getText().toString());
+        outState.putBoolean("ENVIAR", btEnviar.isEnabled());
+        outState.putBoolean("NOM", etNom.isEnabled());
+        outState.putBoolean("RADIOGROUP", radioGroup.isEnabled());
+        outState.putBoolean("MASCLE", radioMascle.isEnabled());
+        outState.putBoolean("FEMELLA", radioFemella.isEnabled());
+        super.onSaveInstanceState(outState);
     }
 
     public void desactivarElementos(){
